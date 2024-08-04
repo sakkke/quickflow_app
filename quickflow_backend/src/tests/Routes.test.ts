@@ -5,9 +5,6 @@ import { Routes } from "../models/Routes";
 import { Direction } from "../models/Direction";
 import { adminAuth, pb } from "../pocketbase";
 
-let testRailway: Railways;
-let testStation: Stations;
-
 const clearCollection = async (collectionName: string) => {
   const records = await pb.collection(collectionName).getFullList();
   for (const record of records) {
@@ -15,13 +12,26 @@ const clearCollection = async (collectionName: string) => {
   }
 };
 
+let testRailway: Railways;
+let testStation: Stations;
+
 beforeAll(async () => {
   await adminAuth("example@example.com", "1234567890");
-  clearCollection("routes");
+  await clearCollection("routes");
+  await clearCollection("stations");
+  await clearCollection("railways");
+
   testRailway = new Railways("Test Railway");
   await testRailway.save();
+
+  // 確実にリソースが作成されるようにする
+  testRailway = await pb.collection("railways").getOne(testRailway.id);
+
   testStation = new Stations(testRailway, "Test Station");
   await testStation.save();
+
+  // 確実にリソースが作成されるようにする
+  testStation = await pb.collection("stations").getOne(testStation.id);
 });
 
 describe("Routes", () => {
@@ -38,5 +48,7 @@ describe("Routes", () => {
 });
 
 afterAll(async () => {
-  clearCollection("routes");
+  await clearCollection("routes");
+  await clearCollection("stations");
+  await clearCollection("railways");
 });
