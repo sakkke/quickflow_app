@@ -12,8 +12,12 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
-app.get("/admin", AdminConsole);
-app.get("/user", UserConsole);
+app.get("/admin", async (c) => {
+  return await c.html(AdminConsole(c));
+});
+app.get("/user", async (c) => {
+  return await c.html(UserConsole(c));
+});
 
 app.get("/railways", async (c) => {
   const railways = await Railways.fetchAll();
