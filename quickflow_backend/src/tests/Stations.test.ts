@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { Railways } from "../models/Railways";
 import { Stations } from "../models/Stations";
-import { pb } from "../pocketbase";
+import { adminAuth, pb } from "../pocketbase";
 
 let testRailway: Railways;
 
@@ -13,6 +13,7 @@ const clearCollection = async (collectionName: string) => {
 };
 
 beforeAll(async () => {
+  await adminAuth("example@example.com", "1234567890");
   clearCollection("stations");
   testRailway = new Railways("Test Railway");
   await testRailway.save();

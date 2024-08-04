@@ -5,7 +5,7 @@ import { Routes } from "../models/Routes";
 import { Crowd } from "../models/Crowd";
 import { Direction } from "../models/Direction";
 import { CrowdLevel } from "../models/CrowdLevel";
-import { pb } from "../pocketbase";
+import { adminAuth, pb } from "../pocketbase";
 
 let testRailway: Railways;
 let testStation: Stations;
@@ -19,6 +19,7 @@ const clearCollection = async (collectionName: string) => {
 };
 
 beforeAll(async () => {
+  await adminAuth("example@example.com", "1234567890");
   clearCollection("crowd");
   testRailway = new Railways("Test Railway");
   await testRailway.save();

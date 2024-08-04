@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { Railways } from "../models/Railways";
-import { pb } from "../pocketbase";
+import { adminAuth, pb } from "../pocketbase";
 
 const clearCollection = async (collectionName: string) => {
   const records = await pb.collection(collectionName).getFullList();
@@ -9,7 +9,8 @@ const clearCollection = async (collectionName: string) => {
   }
 };
 
-beforeAll(() => {
+beforeAll(async () => {
+  await adminAuth("example@example.com", "1234567890");
   clearCollection("railways");
 });
 
