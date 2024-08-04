@@ -2,8 +2,15 @@ import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { Railways } from "../models/Railways";
 import { pb } from "../pocketbase";
 
+const clearCollection = async (collectionName: string) => {
+  const records = await pb.collection(collectionName).getFullList();
+  for (const record of records) {
+    await pb.collection(collectionName).delete(record.id);
+  }
+};
+
 beforeAll(() => {
-  pb.collection("railways").clear();
+  clearCollection("railways");
 });
 
 describe("Railways", () => {
@@ -20,5 +27,5 @@ describe("Railways", () => {
 });
 
 afterAll(() => {
-  pb.collection("railways").clear();
+  clearCollection("railways");
 });

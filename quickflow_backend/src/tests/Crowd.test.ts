@@ -11,8 +11,15 @@ let testRailway: Railways;
 let testStation: Stations;
 let testRoute: Routes;
 
+const clearCollection = async (collectionName: string) => {
+  const records = await pb.collection(collectionName).getFullList();
+  for (const record of records) {
+    await pb.collection(collectionName).delete(record.id);
+  }
+};
+
 beforeAll(async () => {
-  await pb.collection("crowd").clear();
+  clearCollection("crowd");
   testRailway = new Railways("Test Railway");
   await testRailway.save();
   testStation = new Stations(testRailway, "Test Station");
@@ -35,5 +42,5 @@ describe("Crowd", () => {
 });
 
 afterAll(async () => {
-  await pb.collection("crowd").clear();
+  clearCollection("crowd");
 });

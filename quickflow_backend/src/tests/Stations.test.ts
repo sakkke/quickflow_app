@@ -5,8 +5,15 @@ import { pb } from "../pocketbase";
 
 let testRailway: Railways;
 
+const clearCollection = async (collectionName: string) => {
+  const records = await pb.collection(collectionName).getFullList();
+  for (const record of records) {
+    await pb.collection(collectionName).delete(record.id);
+  }
+};
+
 beforeAll(async () => {
-  await pb.collection("stations").clear();
+  clearCollection("stations");
   testRailway = new Railways("Test Railway");
   await testRailway.save();
 });
@@ -25,5 +32,5 @@ describe("Stations", () => {
 });
 
 afterAll(async () => {
-  await pb.collection("stations").clear();
+  clearCollection("stations");
 });
