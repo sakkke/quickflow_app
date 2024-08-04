@@ -1,4 +1,6 @@
 import { Hono } from "hono";
+import { AdminConsole } from "./components/AdminConsole";
+import { UserConsole } from "./components/UserConsole";
 import { Railways } from "./models/Railways";
 import { Stations } from "./models/Stations";
 import { Routes } from "./models/Routes";
@@ -9,6 +11,9 @@ const app = new Hono();
 app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
+
+app.get("/admin", AdminConsole);
+app.get("/user", UserConsole);
 
 app.get("/railways", async (c) => {
   const railways = await Railways.fetchAll();
