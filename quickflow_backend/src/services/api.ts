@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8090/api",
+  baseURL: "http://127.0.0.1:3000/api",
 });
 
 export const fetchRailways = async () => {
