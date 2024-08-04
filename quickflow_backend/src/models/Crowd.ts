@@ -1,6 +1,9 @@
 import { pb } from "../pocketbase";
 import { Routes } from "./Routes";
 import { CrowdLevel } from "./CrowdLevel";
+import { Direction } from "./Direction";
+import { Railways } from "./Railways";
+import { Stations } from "./Stations";
 
 export class Crowd {
   id?: string;

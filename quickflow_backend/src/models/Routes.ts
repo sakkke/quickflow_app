@@ -1,6 +1,7 @@
 import { pb } from "../pocketbase";
 import { Stations } from "./Stations";
 import { Direction } from "./Direction";
+import { Railways } from "./Railways";
 
 export class Routes {
     id?: string;
