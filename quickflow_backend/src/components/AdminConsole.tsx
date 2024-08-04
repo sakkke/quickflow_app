@@ -23,7 +23,7 @@ export const AdminConsole = async (c: Context) => {
         <table>
           <thead>
             <tr>
-              <th>Route ID</th>
+              <th>Railway Name</th>
               <th>Index</th>
               <th>Crowd Level</th>
             </tr>
@@ -31,7 +31,7 @@ export const AdminConsole = async (c: Context) => {
           <tbody>
             {crowd.map((entry) => (
               <tr key={entry.id}>
-                <td>{entry.route.id}</td>
+                <td>{entry.route.station.railway.name}</td>
                 <td>{entry.index}</td>
                 <td>{entry.crowdLevel}</td>
               </tr>
