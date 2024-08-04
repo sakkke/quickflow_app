@@ -25,13 +25,13 @@ beforeAll(async () => {
   await testRailway.save();
 
   // 確実にリソースが作成されるようにする
-  testRailway = await pb.collection("railways").getOne(testRailway.id);
+  testRailway = await pb.collection("railways").getOne(testRailway.id!);
 
   testStation = new Stations(testRailway, "Test Station");
   await testStation.save();
 
   // 確実にリソースが作成されるようにする
-  testStation = await pb.collection("stations").getOne(testStation.id);
+  testStation = await pb.collection("stations").getOne(testStation.id!);
 });
 
 describe("Routes", () => {
