@@ -38,6 +38,10 @@ export const AdminConsole = async (c: Context) => {
             ))}
           </tbody>
         </table>
+        <hr />
+        {crowd.map((entry) => (
+          <p>{JSON.stringify(entry)}</p>
+        ))}
       </body>
     </html>
   );
