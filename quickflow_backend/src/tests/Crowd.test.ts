@@ -20,7 +20,7 @@ const clearCollection = async (collectionName: string) => {
 
 beforeAll(async () => {
   await adminAuth("example@example.com", "1234567890");
-  clearCollection("crowd");
+  await clearCollection("crowd");
   testRailway = new Railways("Test Railway");
   await testRailway.save();
   testStation = new Stations(testRailway, "Test Station");
@@ -43,5 +43,5 @@ describe("Crowd", () => {
 });
 
 afterAll(async () => {
-  clearCollection("crowd");
+  await clearCollection("crowd");
 });

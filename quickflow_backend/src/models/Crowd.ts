@@ -1,9 +1,6 @@
 import { pb } from "../pocketbase";
 import { Routes } from "./Routes";
 import { CrowdLevel } from "./CrowdLevel";
-import { Direction } from "./Direction";
-import { Railways } from "./Railways";
-import { Stations } from "./Stations";
 
 export class Crowd {
   id?: string;
@@ -19,22 +16,13 @@ export class Crowd {
 
   static async fetchAll(): Promise<Crowd[]> {
     const records = await pb.collection("crowd").getFullList();
-    return records.map(
-      (record) =>
-        new Crowd(
-          new Routes(
-            new Stations(
-              new Railways(record.route.station.railway),
-              record.route.station.name
-            ),
-            record.route.direction as Direction,
-            record.route.time,
-            record.route.railwayLength
-          ),
-          record.index,
-          record.crowdLevel as CrowdLevel
-        )
+    const crowds = await Promise.all(
+      records.map(async (record) => {
+        const route = await Routes.fetchById(record.route);
+        return new Crowd(route, record.index, record.crowdLevel as CrowdLevel);
+      })
     );
+    return crowds;
   }
 
   async save() {
